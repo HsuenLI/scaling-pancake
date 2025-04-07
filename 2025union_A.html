@@ -490,21 +490,18 @@
           groupData.B1.items,
           groupData.C.items,
           groupData.D.items,
-          ["過敏體質檢查 (IgE)"]
         );
       } else if (group === 'A+B2+C+D') {
         names = groupData.A.items.concat(
           groupData.B2.items,
           groupData.C.items,
           groupData.D.items,
-          ["過敏體質檢查 (IgE)"]
         );
       } else if (group === 'A+Bx+C+D') {
         names = groupData.A.items.concat(
           hasB1 ? groupData.B1.items : groupData.B2.items,
           groupData.C.items,
           groupData.D.items,
-          ["過敏體質檢查 (IgE)"]
         );
       } else if (group === 'D') {
         names = groupData.D.items;
@@ -721,12 +718,11 @@
 
         if (key === 'A+Bx+C+D') {
           price = 7500;
-          label = 'A 式 + B1/B2 式 + C 式 + D 式 專案價（加贈 IgE）';
+          label = 'A 式 + B1/B2 式 + C 式 + D 式 專案價';
           items = groupData.A.items.concat(
             hasB1 ? groupData.B1.items : groupData.B2.items,
             groupData.C.items,
             groupData.D.items,
-            ["過敏體質檢查 (IgE)"]
           );
         } else if (key === 'A+Bx+C') {
           price = 6000;
