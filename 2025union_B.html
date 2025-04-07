@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2025 統一B方案加選項目表</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #selected-items li.font-bold {
+      margin-top: 1rem;
+      color: #1d4ed8;
+      font-weight: 700;
+    }
+
+    #package-note span.imaging-label {
+      color: #1e40af;
+      /* 深藍 */
+      font-weight: bold;
+    }
+
+    #package-note span.imaging-content {
+      color: #3b82f6;
+      /* 淺藍 */
+    }
+
+    #package-note span.tube-label {
+      color: #92400e;
+      /* 深橘 */
+      font-weight: bold;
+    }
+
+    #package-note span.tube-content {
+      color: #f59e0b;
+      /* 淺橘 */
+    }
+
+    #package-note .tube-purple {
+      color: #5f19a1;
+      /* 紫色 */
+    }
+
+    #package-note .tube-purpleyellow {
+      color: #d046ef;
+      /* 紫黃色 */
+    }
+
+    #package-note .tube-lightblue {
+      color: #38bdf8;
+      /* 淺藍 */
+    }
+
+    #package-note .tube-red {
+      color: #ef4444;
+      /* 紅色 */
+    }
+
+    #package-note .imaging-b2 {
+      color: #be185d;
+      /* 粉紅 B2 */
+    }
+
+    #package-note .imaging-b1 {
+      color: steelblue;
+      /* steelblue B1 */
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-4 text-center">健檢加選項目查詢</h1>
+    <div class="mb-4">
+      <label for="patient-id" class="block mb-1 font-medium">病歷號：</label>
+      <input id="patient-id" type="text" class="w-full p-2 border rounded" placeholder="請輸入病歷號" />
+    </div>
+
+    <div class="mb-4">
+      <label for="gender" class="block mb-1 font-medium">選擇性別：</label>
+      <select id="gender" class="w-full p-2 border rounded">
+        <option value="all">不限</option>
+        <option value="male">男</option>
+        <option value="female">女</option>
+      </select>
+    </div>
+
+    <div class="space-y-4 mb-6">
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-orange-700">📦 A式 各器官功能檢查（專案價$2500）原價2600</h2>
+          <button onclick="addGroup('A')" class="text-sm bg-orange-600 text-white px-3 py-1 rounded">整組加入</button>
+        </div>
+        <ul id="groupA-list" class="list-disc pl-6 mt-2">
+          <!-- 肝功能檢查 -->
+          <li class="flex justify-between items-center gap-2 font-bold text-orange-400 mt-2">肝功能檢查 ($600)：
+            <button onclick="addItemByName('肝功能檢查')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2 text-sm">
+            草酸轉氨基酵素（SGOT）、白蛋白/球蛋白（A/G）、鹼性磷酸酶（ALK-P）、白蛋白（ALB）、球蛋白（GLOB）、總蛋白（T-P）、珈瑪麩氨酸酵素（r-GT）
+          </li>
+          <!-- 膽功能檢查 -->
+          <li class="font-bold text-orange-400 mt-2">膽功能檢查 ($200)：</li>
+          <li class="flex justify-between items-center gap-2 text-sm">
+            總膽紅素（T-Bil）、直接膽紅素（D-Bil）
+            <button onclick="addItemByName('膽功能檢查')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <!-- 胰臟功能檢查 -->
+          <li class="font-bold text-orange-400 mt-2">胰臟功能檢查 ($400)：</li>
+          <li class="flex justify-between items-center gap-2 text-sm">
+            澱粉酵素（Amylase）、解脂酶（Lipase
+            <button onclick="addItemByName('胰臟功能檢查')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <!-- 腎功能檢查 -->
+          <li class="font-bold text-orange-400 mt-2">腎功能檢查 ($200)：</li>
+          <li class="flex justify-between items-center gap-2 text-sm">
+            尿素類（BUN）、腎絲球過濃率（eGFR）、尿酸（Uric Acid）
+            <button onclick="addItemByName('腎功能檢查')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <!-- 糖尿病檢查 -->
+          <li class="font-bold text-orange-400 mt-2">糖尿病檢查 ($400)：</li>
+          <li class="flex justify-between items-center gap-2 text-sm">
+            醣化血色素
+            <button onclick="addItemByName('醣化血色素 (HbA1C)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <!-- 電解質 -->
+          <li class="font-bold text-orange-400 mt-2">電解質 ($400)：</li>
+          <li class="flex justify-between items-cent（r gap-2 text-sm">
+            Na、K、Cl、Ca、P
+            <button onclick="addItemByName('電解質 Na、K、Cl、Ca、P')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <!-- 心臟機能檢查 -->
+          <li class="font-bold text-orange-400 mt-2">心臟機能檢查 ($400)：</li>
+          <li class="flex justify-between items-cent（r gap-2 text-sm">
+            乳酸脫氫酵素（LDH）、肌酸激酵素(CPK)
+            <button onclick="addItemByName('心臟機能檢查')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+        </ul>
+      </div>
+
+      <div id="box-b" class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-green-800">📦 B式 癌症篩檢（依性別顯示 B1 或 B2）</h2>
+        </div>
+        <p class="text-sm text-gray-600 mt-2">請選擇性別以查看對應的癌症篩檢套餐</p>
+      </div>
+      <div id="box-b1" class="hidden bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-[steelblue]">📦 B1 男性癌症篩檢（$3000）原價3400</h2>
+          <button onclick="addGroup('B1')" class="text-sm bg-[steelblue] text-white px-3 py-1 rounded">整組加入</button>
+        </div>
+        <ul id="groupB1-list" class="list-disc pl-6 mt-2">
+          <li class="flex justify-between items-center gap-2">甲型胎兒蛋白 AFP $500<button
+              onclick="addItemByName('甲型胎兒蛋白 AFP')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">癌胚胎抗原 CEA $500<button onclick="addItemByName('癌胚胎抗原 CEA')"
+              class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">胰臟癌 CA-199 $800<button
+              onclick="addItemByName('胰臟癌 CA-199')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">前列腺特定抗原 Total PSA $600<button
+              onclick="addItemByName('前列腺特定抗原 Total PSA')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">肺腺癌篩檢 Cyfra21-1 $1,000<button
+              onclick="addItemByName('肺腺癌篩檢 Cyfra21-1')" class="text-blue-500 text-sm">+ 加入</button></li>
+        </ul>
+      </div>
+
+      <div id="box-b2" class="hidden bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-pink-700">📦 B2 女性癌症篩檢（$3000）原價3400</h2>
+          <button onclick="addGroup('B2')" class="text-sm bg-pink-600 text-white px-3 py-1 rounded">整組加入</button>
+        </div>
+        <ul id="groupB2-list" class="list-disc pl-6 mt-2">
+          <li class="flex justify-between items-center gap-2">甲型胎兒蛋白 AFP $500<button
+              onclick="addItemByName('甲型胎兒蛋白 AFP')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">癌胚胎抗原 CEA $500<button onclick="addItemByName('癌胚胎抗原 CEA')"
+              class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">胰臟癌 CA-199 $800<button
+              onclick="addItemByName('胰臟癌 CA-199')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">乳癌 CA-153 $600<button onclick="addItemByName('乳癌 CA-153')"
+              class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">肺腺癌篩檢 Cyfra21-1 $1,000<button
+              onclick="addItemByName('肺腺癌篩檢 Cyfra21-1')" class="text-blue-500 text-sm">+ 加入</button></li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-blue-700">📦 C式 高階心臟血管篩檢（$3500）原價3650</h2>
+          <button onclick="addGroup('C')" class="text-sm bg-blue-600 text-white px-3 py-1 rounded">整組加入</button>
+        </div>
+        <ul id="groupC-list" class="list-disc pl-6 mt-2">
+          <li class="flex justify-between items-center gap-2">高敏感度C反應蛋白 Hs-CRP $350 <button
+              onclick="addItemByName('高敏感度C反應蛋白 Hs-CRP')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">心臟功能檢查 CK-MB $800<button
+              onclick="addItemByName('心臟功能檢查 CK-MB')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">同半胱胺酸 Homocysteine $1000<button
+              onclick="addItemByName('同半胱胺酸 Homocysteine')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">血栓因子 D-Dimer $1500<button
+              onclick="addItemByName('血栓因子 D-Dimer')" class="text-blue-500 text-sm">+ 加入</button></li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-yellow-700">📦 D式 新陳代謝與內分泌篩檢（$2000）原價2460</h2>
+          <button onclick="addGroup('D')" class="text-sm bg-yellow-600 text-white px-3 py-1 rounded">整組加入</button>
+        </div>
+        <ul id="groupD-list" class="list-disc pl-6 mt-2">
+          <li class="flex justify-between items-center gap-2">甲狀腺功能 T3、T4、TSH $1000<button
+              onclick="addItemByName('甲狀腺功能 T3、T4、TSH')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">游離四碘甲狀腺素 (Free T4) $260<button
+              onclick="addItemByName('游離四碘甲狀腺素 (Free T4)')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">甲狀腺球蛋白 Thyroglobulin $800<button
+              onclick="addItemByName('甲狀腺球蛋白 Thyroglobulin')" class="text-blue-500 text-sm">+ 加入</button></li>
+          <li class="flex justify-between items-center gap-2">類風濕因子 RA $400<button onclick="addItemByName('類風濕因子 RA')"
+              class="text-blue-500 text-sm">+ 加入</button></li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-purple-400">📦 其他項目</h2>
+        </div>
+        <ul id="groupOthers-list" class="list-disc pl-6 mt-2">
+          <!-- 肝炎篩檢 -->
+          <li class="font-bold text-purple-500 mt-2">肝炎篩檢：</li>
+          <li class="flex justify-between items-center gap-2">A型肝炎抗體(HAV-IgG) $400
+            <button onclick="addItemByName('A型肝炎抗體(HAV-IgG)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">B型肝炎表面抗原(HBsAg)、B型肝炎表面抗體 (Anti-HBs) $500
+            <button onclick="addItemByName('B型肝炎表面抗原(HBsAg)、B型肝炎表面抗體 (Anti-HBs)')" class="text-blue-500 text-sm">+
+              加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">B型肝炎e抗原(HBeAg) $500
+            <button onclick="addItemByName('B型肝炎e抗原(HBeAg)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">C型肝炎抗體(Anti-HCV) $500
+            <button onclick="addItemByName('C型肝炎抗體(Anti-HCV)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+
+          <!-- 癌症指標 -->
+          <li class="font-bold text-purple-500 mt-2">癌症指標：</li>
+          <li class="flex justify-between items-center gap-2">肺癌(NSE) $800
+            <button onclick="addItemByName('肺癌(NSE)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">鼻咽癌(EBV-IgA) $800
+            <button onclick="addItemByName('鼻咽癌(EBV-IgA)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">鱗狀上皮細胞癌(SCC) $1,000
+            <button onclick="addItemByName('鱗狀上皮細胞癌(SCC)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">卵巢癌(CA-125) $520
+            <button onclick="addItemByName('卵巢癌(CA-125)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">胃癌(CA72-4) $800
+            <button onclick="addItemByName('胃癌(CA72-4)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">睪丸癌/絨毛內膜癌(β-HCG) $600
+            <button onclick="addItemByName('睪丸癌/絨毛膜癌 β-HCG')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+
+          <!-- 過敏與免疫 -->
+          <li class="font-bold text-purple-500 mt-2">過敏與免疫：</li>
+          <li class="flex justify-between items-center gap-2">Anti-ENA抗體(CTD screen) $350
+            <button onclick="addItemByName('Anti-ENA抗體(CTD screen)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">過敏原檢測-50項 $5,000
+            <button onclick="addItemByName('過敏原檢測-50項')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">過敏原檢測-100項 $10,000
+            <button onclick="addItemByName('過敏原檢測-100項')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+
+          <!-- 內分泌與荷爾蒙 -->
+          <li class="font-bold text-purple-500 mt-2">內分泌與荷爾蒙：</li>
+          <li class="flex justify-between items-center gap-2">維生素D3/25 OH Vitamin D3 $1,000
+            <button onclick="addItemByName('維生素D3/25 OH Vitamin D3')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">維生素B12 (Vitamin B12) $500
+            <button onclick="addItemByName('維生素B12 (Vitamin B12)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">葉酸 (Folic acid) $400
+            <button onclick="addItemByName('葉酸 (Folic acid)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">泌乳激素(Prolactin) $400
+            <button onclick="addItemByName('泌乳激素(Prolactin)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">黃體素(Progesterone)(女性) $400
+            <button onclick="addItemByName('黃體素(Progesterone)(女性)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">女性荷爾蒙 (E2.LH.FSH) $1,200
+            <button onclick="addItemByName('女性荷爾蒙 (E2.LH.FSH)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">抗穆勒氏賀爾蒙 $800
+            <button onclick="addItemByName('抗穆勒氏賀爾蒙')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+
+          <!-- 糖尿病相關試驗 -->
+          <li class="font-bold text-purple-500 mt-2">糖尿病檢查：</li>
+          <li class="flex justify-between items-center gap-2">胰島素(Insulin)、胰島素阻抗 $600
+            <button onclick="addItemByName('胰島素(Insulin)、胰島素阻抗')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+
+          <!-- 其他血液檢查 -->
+          <li class="font-bold text-purple-500 mt-2">其他血液檢查：</li>
+          <li class="flex justify-between items-center gap-2">ABO血型 $400
+            <button onclick="addItemByName('ABO血型')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">缺鐵性貧血(TIBC.Iron.Ferritin) $1,200
+            <button onclick="addItemByName('缺鐵性貧血(TIBC.Iron.Ferritin)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">後天免疫缺乏症候群(HIV) $600
+            <button onclick="addItemByName('後天免疫缺乏症候群(HIV)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">梅毒反應(VDRL) $300
+            <button onclick="addItemByName('梅毒反應(VDRL)')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+
+          <!-- 呼氣檢查 -->
+          <li class="font-bold text-purple-500 mt-2">呼氣檢查：</li>
+          <li class="flex justify-between items-center gap-2">C13尿素呼氣檢查幽門桿菌 $1,500
+            <button onclick="addItemByName('C13尿素呼氣檢查幽門桿菌')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-rose-700">📦 婚前健檢套餐</h2>
+        </div>
+        <p id="marriage-tip" class="text-sm text-gray-600 mt-2">請選擇性別以查看對應的婚前健檢套餐</p>
+        <ul class="list-disc pl-6 mt-2">
+          <li id="marriage-male" class="flex justify-between items-center gap-2">
+            婚前健檢項目(男性)-地中海型貧血(電泳)、蠶豆症G6PD、男性荷爾蒙Testosterone $1,600
+            <button onclick="addItemByName('婚前健檢項目(男性)-地中海型貧血(電泳)、蠶豆症G6PD、男性荷爾蒙Testosterone')"
+              class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li id="marriage-female" class="flex justify-between items-center gap-2">
+            婚前健檢項目(女性)-地中海型貧血(電泳)、蠶豆症G6PD、德國麻疹Rubella IgG、水痘抗體 $2000
+            <button onclick="addItemByName('婚前健檢項目(女性)-地中海型貧血(電泳)、蠶豆症G6PD、德國麻疹Rubella IgG、水痘抗體')"
+              class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-white p-4 rounded shadow">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-cyan-700">📦 超音波檢查： </h2>
+        </div>
+        <ul class="list-disc pl-6 mt-2">
+          <li class="flex justify-between items-center gap-2">攝護腺超音波 $1200
+            <button onclick="addItemByName('攝護腺超音波')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">骨盆腔超音波 $1200
+            <button onclick="addItemByName('骨盆腔超音波')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">甲狀腺超音波 $1200
+            <button onclick="addItemByName('甲狀腺超音波')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">乳房超音波 $1200
+            <button onclick="addItemByName('乳房超音波')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+          <li class="flex justify-between items-center gap-2">頸動脈超音波 $1500
+            <button onclick="addItemByName('頸動脈超音波')" class="text-blue-500 text-sm">+ 加入</button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="mt-6 p-4 bg-white shadow rounded">
+      <h2 class="text-xl font-semibold mb-2">已選項目</h2>
+      <ul id="selected-items" class="list-disc pl-6"></ul>
+      <p class="mt-2 font-bold">總金額：<span id="total-price" class="text-2xl font-bold text-red-600">0</span> 元</p>
+      <p id="package-note" class="text-green-600 font-semibold"></p>
+      <div id="specimen-summary" class="mt-2 text-sm text-gray-700"></div>
+    </div>
+
+  </div>
+
+  <script>
+    const data = [
+      { name: "解脂酶(Lipase)", price: 400, specimen: "血液" },
+      { name: "鐵蛋白(Ferritin)", price: 400, specimen: "血液" },
+      { name: "膽素脂酶(Cholinesterase)", price: 400, specimen: "血液" },
+      { name: "B型肝炎表面抗原(HBsAg)、B型肝炎表面抗體 (Anti-HBs)", price: 500, specimen: "血液" },
+      { name: "癌胚胎抗原 CEA", price: 500, specimen: "血液" },
+      { name: "胰臟癌 CA-199", price: 800, specimen: "血液" },
+      { name: "睪丸癌 β-HCG", price: 600, specimen: "血液" },
+      { name: "睪丸癌/絨毛膜癌 β-HCG", price: 600, specimen: "血液" },
+      { name: "絨毛膜癌 β-HCG", price: 600, specimen: "血液" },
+      { name: "乳癌 CA-153", price: 600, specimen: "血液" },
+      { name: "肺腺癌篩檢 Cyfra21-1", price: 1000, specimen: "血液" },
+      { name: "甲型胎兒蛋白 AFP", price: 500, specimen: "血液" },
+      { name: "前列腺特定抗原 Total PSA", price: 600, specimen: "血液" },
+      { name: "男性荷爾蒙檢測", price: 1000, specimen: "血液" },
+      { name: "高敏感度C反應蛋白 Hs-CRP", price: 350, specimen: "血液" },
+      { name: "心臟功能檢查 CK-MB", price: 800, specimen: "血液" },
+      { name: "同半胱胺酸 Homocysteine", price: 1000, specimen: "血液" },
+      { name: "血栓因子 D-Dimer", price: 1500, specimen: "血液" },
+      { name: "超壞膽固醇 small-dense LDL", price: 1000, specimen: "血液" },
+      { name: "甲狀腺功能 T3、T4、TSH", price: 1000, specimen: "血液" },
+      { name: "游離四碘甲狀腺素 (Free T4)", price: 260, specimen: "血液" },
+      { name: "甲狀腺球蛋白 Thyroglobulin", price: 800, specimen: "血液" },
+      { name: "類風濕因子 RA", price: 400, specimen: "血液" },
+      { name: "電解質 Na、K、Cl、Ca、P", price: 400, specimen: "血液" },
+      { name: "過敏體質檢查 (IgE)", price: 0, specimen: "血液" },
+      { name: "酒精代謝基因檢測", price: 2500, specimen: "血液" },
+      { name: "遺傳性聽損基因檢測", price: 4500, specimen: "血液" },
+      { name: "ApoE阿茲海默症風險基因檢測", price: 3000, specimen: "血液" },
+      { name: "藥害基因檢測 (HLA-B1502)", price: 3500, specimen: "血液" },
+      { name: "婚前健檢項目(男性)-地中海型貧血(電泳)、蠶豆症G6PD、男性荷爾蒙Testosterone", price: 1600, specimen: "血液" },
+      { name: "婚前健檢項目(女性)-地中海型貧血(電泳)、蠶豆症G6PD、德國麻疹Rubella IgG、水痘抗體", price: 2000, specimen: "血液" },
+      { name: "攝護腺超音波", price: 1200, specimen: "影像" },
+      { name: "骨盆腔超音波", price: 1200, specimen: "影像" },
+      { name: "甲狀腺超音波", price: 1200, specimen: "影像" },
+      { name: "乳房超音波", price: 1200, specimen: "影像" },
+      { name: "頸動脈超音波", price: 1500, specimen: "影像" },
+      { name: "Anti-ENA抗體(CTD screen)", price: 350, specimen: "血液" },
+      { name: "A型肝炎抗體(HAV-IgG)", price: 400, specimen: "血液" },
+      { name: "B型肝炎e抗原(HBeAg)", price: 500, specimen: "血液" },
+      { name: "C型肝炎抗體(Anti-HCV)", price: 500, specimen: "血液" },
+      { name: "肺癌(NSE)", price: 800, specimen: "血液" },
+      { name: "鱗狀上皮細胞癌(SCC)", price: 1000, specimen: "血液" },
+      { name: "鼻咽癌(EBV-IgA)", price: 800, specimen: "血液" },
+      { name: "卵巢癌(CA-125)", price: 520, specimen: "血液" },
+      { name: "胃癌(CA72-4)", price: 800, specimen: "血液" },
+      { name: "過敏體質檢查 (IgE)", price: 700, specimen: "血液" },
+      { name: "過敏原檢測-36項", price: 3000, specimen: "血液" },
+      { name: "過敏原檢測-50項", price: 5500, specimen: "血液" },
+      { name: "過敏原檢測-100項", price: 10000, specimen: "血液" },
+      { name: "維生素D3/25 OH Vitamin D3", price: 1500, specimen: "血液" },
+      { name: "維生素B12 (Vitamin B12)", price: 500, specimen: "血液" },
+      { name: "葉酸 (Folic acid)", price: 400, specimen: "血液" },
+      { name: "泌乳激素(Prolactin)", price: 400, specimen: "血液" },
+      { name: "黃體素(Progesterone)(女性)", price: 400, specimen: "血液" },
+      { name: "女性荷爾蒙 (E2.LH.FSH)", price: 1200, specimen: "血液" },
+      { name: "缺鐵性貧血(TIBC.Iron.Ferritin)", price: 1200, specimen: "血液" },
+      { name: "抗穆勒氏賀爾蒙", price: 800, specimen: "血液" },
+      { name: "ABO血型", price: 400, specimen: "血液" },
+      { name: "後天免疫缺乏症候群(HIV)", price: 600, specimen: "血液" },
+      { name: "梅毒反應(VDRL)", price: 300, specimen: "血液" },
+      { name: "C13尿素呼氣檢查幽門桿菌", price: 1500, specimen: "氣體" },
+      { name: "醣化血色素 (HbA1C)", price: 400, specimen: "血液" },
+      { name: "胰島素(Insulin)、胰島素阻抗", price: 600, specimen: "血液" },
+      { name: "肝功能檢查", price: 600, specimen: "血液" },
+      { name: "膽功能檢查", price: 200, specimen: "血液" },
+      { name: "胰臟功能檢查", price: 400, specimen: "血液" },
+      { name: "腎功能檢查", price: 400, specimen: "血液" },
+      { name: "血糖檢查", price: 300, specimen: "血液" },
+      { name: "血脂肪檢查", price: 700, specimen: "血液" },
+      { name: "心臟機能檢查", price: 400, specimen: "血液" },
+    ];
+
+    const groupData = {
+      A: {
+        items: ["肝功能檢查", "膽功能檢查", "胰臟功能檢查", "腎功能檢查", "醣化血色素 (HbA1C)", "電解質 Na、K、Cl、Ca、P", "心臟機能檢查"],
+        price: 2500
+      },
+      B1: {
+        items: ["甲型胎兒蛋白 AFP", "癌胚胎抗原 CEA", "胰臟癌 CA-199", "前列腺特定抗原 Total PSA", "肺腺癌篩檢 Cyfra21-1"],
+        price: 3000
+      },
+      B2: {
+        items: ["甲型胎兒蛋白 AFP", "癌胚胎抗原 CEA", "胰臟癌 CA-199", "乳癌 CA-153", "肺腺癌篩檢 Cyfra21-1"],
+        price: 3000
+      },
+      C: {
+        items: ["高敏感度C反應蛋白 Hs-CRP", "心臟功能檢查 CK-MB", "同半胱胺酸 Homocysteine", "血栓因子 D-Dimer"],
+        price: 3500
+      },
+      D: {
+        items: [
+          "甲狀腺功能 T3、T4、TSH",
+          "游離四碘甲狀腺素 (Free T4)",
+          "甲狀腺球蛋白 Thyroglobulin",
+          "類風濕因子 RA",
+        ],
+        price: 2000
+      }
+    };
+
+    const genderSelect = document.getElementById('gender');
+    const boxB1 = document.getElementById('box-b1');
+    const boxB2 = document.getElementById('box-b2');
+    const selectedItems = document.getElementById('selected-items');
+    const totalPrice = document.getElementById('total-price');
+    const specimenSummary = document.getElementById('specimen-summary');
+
+    let selected = [];
+    let previousGender = 'all';
+
+    function removeGroupItems(group) {
+      let names = [];
+      const hasB1 = groupData.B1.items.every(name => selected.find(item => item.name === name));
+      if (group === 'A+B2+C') {
+        names = groupData.A.items.concat(groupData.B2.items, groupData.C.items);
+      } else if (group === 'A+B2') {
+        names = groupData.A.items.concat(groupData.B2.items);
+      } else if (group === 'A+B1') {
+        names = groupData.A.items.concat(groupData.B1.items);
+      } else if (group === 'A+B1+C') {
+        names = groupData.A.items.concat(groupData.B1.items, groupData.C.items);
+      } else if (group === 'A+Bx+C') {
+        names = groupData.A.items.concat(
+          hasB1 ? groupData.B1.items : groupData.B2.items,
+          groupData.C.items
+        );
+      } else if (group === 'A+B1+C+D') {
+        names = groupData.A.items.concat(
+          groupData.B1.items,
+          groupData.C.items,
+          groupData.D.items,
+          ["過敏體質檢查 (IgE)"]
+        );
+      } else if (group === 'A+B2+C+D') {
+        names = groupData.A.items.concat(
+          groupData.B2.items,
+          groupData.C.items,
+          groupData.D.items,
+          ["過敏體質檢查 (IgE)"]
+        );
+      } else if (group === 'A+Bx+C+D') {
+        names = groupData.A.items.concat(
+          hasB1 ? groupData.B1.items : groupData.B2.items,
+          groupData.C.items,
+          groupData.D.items,
+          ["過敏體質檢查 (IgE)"]
+        );
+      } else if (group === 'D') {
+        names = groupData.D.items;
+      } else {
+        names = groupData[group].items;
+      }
+      selected = selected.filter(item => !names.includes(item.name));
+      updateSelected();
+    }
+
+    genderSelect.addEventListener('change', () => {
+      const gender = genderSelect.value;
+
+      if (previousGender === 'male' && gender !== 'male') {
+        removeGroupItems('B1');
+      } else if (previousGender === 'female' && gender !== 'female') {
+        removeGroupItems('B2');
+      }
+      previousGender = gender;
+
+      boxB1.classList.add('hidden');
+      boxB2.classList.add('hidden');
+      if (gender === 'male') boxB1.classList.remove('hidden');
+      else if (gender === 'female') boxB2.classList.remove('hidden');
+
+      document.getElementById('marriage-male').classList.add('hidden');
+      document.getElementById('marriage-female').classList.add('hidden');
+      if (gender === 'male') document.getElementById('marriage-male').classList.remove('hidden');
+      if (gender === 'female') document.getElementById('marriage-female').classList.remove('hidden');
+
+      const marriageTip = document.getElementById('marriage-tip');
+      if (gender === 'all') {
+        marriageTip.classList.remove('hidden');
+      } else {
+        marriageTip.classList.add('hidden');
+      }
+
+      // Ensure box-b remains hidden
+      document.getElementById('box-b').classList.add('hidden');
+
+      // 控制超音波項目顯示
+      document.querySelector("li:has(button[onclick*=攝護腺超音波])").classList.add('hidden');
+      document.querySelector("li:has(button[onclick*=骨盆腔超音波])").classList.add('hidden');
+      document.querySelector("li:has(button[onclick*=乳房超音波])").classList.add('hidden');
+      if (gender === 'male') {
+        document.querySelector("li:has(button[onclick*=攝護腺超音波])").classList.remove('hidden');
+      } else if (gender === 'female') {
+        document.querySelector("li:has(button[onclick*=骨盆腔超音波])").classList.remove('hidden');
+        document.querySelector("li:has(button[onclick*=乳房超音波])").classList.remove('hidden');
+      }
+
+      // 移除性別特有的超音波與婚前健檢項目
+      const genderSpecificItems = {
+        male: [
+          "攝護腺超音波",
+          "婚前健檢項目(男性)-地中海型貧血(電泳)、蠶豆症G6PD、男性荷爾蒙Testosterone"
+        ],
+        female: [
+          "骨盆腔超音波",
+          "乳房超音波",
+          "婚前健檢項目(女性)-地中海型貧血(電泳)、蠶豆症G6PD、德國麻疹Rubella IgG、水痘抗體"
+        ]
+      };
+
+      const itemsToRemove = gender === 'male' ? genderSpecificItems.female : gender === 'female' ? genderSpecificItems.male : [...genderSpecificItems.male, ...genderSpecificItems.female];
+      selected = selected.filter(item => !itemsToRemove.includes(item.name));
+
+      updateSelected();
+    });
+
+    function addGroup(group) {
+      const names = groupData[group].items;
+      names.forEach(name => {
+        if (!selected.find(item => item.name === name)) {
+          const itemData = data.find(d => d.name === name);
+          if (itemData) selected.push(itemData);
+        }
+      });
+      updateSelected();
+    }
+
+    function addItemByName(name) {
+      if (!selected.find(i => i.name === name)) {
+        const item = data.find(d => d.name === name);
+        if (item) {
+          selected.push(item);
+          updateSelected();
+        }
+      }
+    }
+
+    function removeItemByName(name) {
+      const item = data.find(d => d.name === name);
+      if (item && item.locked) return; // 鎖定項目無法移除
+      selected = selected.filter(item => item.name !== name);
+      updateSelected();
+    }
+
+    function updateSelected() {
+      selectedItems.innerHTML = '';
+      let total = 0;
+      const specimenMap = {};
+      let usedGroups = [];
+
+      const hasA = groupData.A.items.every(name => selected.find(item => item.name === name));
+      const hasB1 = groupData.B1.items.every(name => selected.find(item => item.name === name));
+      const hasB2 = groupData.B2.items.every(name => selected.find(item => item.name === name));
+      const hasC = groupData.C.items.every(name => selected.find(item => item.name === name));
+      const hasD = groupData.D.items.every(name => selected.find(item => item.name === name));
+
+      if (hasA && (hasB1 || hasB2) && hasC && hasD) {
+        usedGroups.push('A+Bx+C+D');
+      } else if (hasA && hasC && (hasB1 || hasB2)) {
+        usedGroups.push('A+Bx+C');
+      } else if (hasA && hasB2 && hasC) {
+        usedGroups.push('A+B2+C');
+      } else if (hasA && hasB2) {
+        usedGroups.push('A+B2');
+      } else if (hasA && hasB1 && hasC) {
+        usedGroups.push('A+B1+C');
+      } else if (hasA && hasB1) {
+        usedGroups.push('A+B1');
+      } else {
+        for (const key in groupData) {
+          const group = groupData[key];
+          const complete = group.items.every(name => selected.find(item => item.name === name));
+          if (complete) usedGroups.push(key);
+        }
+      }
+
+      let usedNames = new Set();
+      usedGroups.forEach(g => {
+        if (g === 'A+B2') {
+          groupData.A.items.concat(groupData.B2.items).forEach(name => usedNames.add(name));
+        } else if (g === 'A+B1') {
+          groupData.A.items.concat(groupData.B1.items).forEach(name => usedNames.add(name));
+        } else if (g === 'A+B1+C') {
+          groupData.A.items.concat(groupData.B1.items, groupData.C.items).forEach(name => usedNames.add(name));
+        } else if (g === 'A+Bx+C') {
+          groupData.A.items.concat(
+            hasB1 ? groupData.B1.items : groupData.B2.items,
+            groupData.C.items
+          ).forEach(name => usedNames.add(name));
+        } else if (g === 'A+Bx+C+D') {
+          groupData.A.items.concat(
+            hasB1 ? groupData.B1.items : groupData.B2.items,
+            groupData.C.items,
+            groupData.D.items,
+            ["過敏體質檢查 (IgE)"]
+          ).forEach(name => usedNames.add(name));
+        } else {
+          groupData[g].items.forEach(name => usedNames.add(name));
+        }
+      });
+
+      const remaining = selected.filter(item => !usedNames.has(item.name));
+
+      const groupTitleMap = {
+        A: 'A 式',
+        B1: 'B1 式',
+        B2: 'B2 式',
+        C: 'C 式',
+        D: 'D 式',
+        'others': '其他項目'
+      };
+      const groupedItems = { A: [], B1: [], B2: [], C: [], D: [], others: [] };
+
+      remaining.forEach(item => {
+        let inGroup = false;
+        for (const key in groupData) {
+          if (groupData[key].items.includes(item.name)) {
+            // Assign to the group with the most matching items in `selected`
+            const groupMatchCounts = Object.entries(groupData).map(([g, group]) => {
+              const count = group.items.filter(n => selected.some(s => s.name === n)).length;
+              return { group: g, count };
+            });
+            groupMatchCounts.sort((a, b) => b.count - a.count);
+            const mostLikelyGroup = groupMatchCounts.find(g => groupData[g.group].items.includes(item.name));
+            if (mostLikelyGroup) {
+              groupedItems[mostLikelyGroup.group].push(item);
+            }
+            inGroup = true;
+            break;
+          }
+        }
+        if (!inGroup) {
+          groupedItems.others.push(item);
+        }
+      });
+
+      for (const key of ['A', 'B1', 'B2', 'C', 'D', 'others']) {
+        if (groupedItems[key].length > 0) {
+          const titleLi = document.createElement('li');
+          titleLi.className = 'font-bold text-blue-700 mt-2';
+          titleLi.textContent = groupTitleMap[key] + '：';
+          selectedItems.appendChild(titleLi);
+
+          groupedItems[key].forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'flex justify-between items-center gap-2 ml-4';
+            li.innerHTML = `${item.name}（${item.price} 元）` +
+              (item.locked ? '' : ` <button onclick="removeItemByName('${item.name}')" class="text-red-500 text-sm">❌</button>`);
+            selectedItems.appendChild(li);
+            total += item.price;
+            specimenMap[item.specimen] = (specimenMap[item.specimen] || 0) + 1;
+          });
+        }
+      }
+
+      usedGroups.forEach(key => {
+        let price = 0;
+        let label = '';
+        let items = [];
+
+        if (key === 'A+Bx+C+D') {
+          price = 7500;
+          label = 'A 式 + B1/B2 式 + C 式 + D 式 專案價（加贈 IgE）';
+          items = groupData.A.items.concat(
+            hasB1 ? groupData.B1.items : groupData.B2.items,
+            groupData.C.items,
+            groupData.D.items,
+            ["過敏體質檢查 (IgE)"]
+          );
+        } else if (key === 'A+Bx+C') {
+          price = 6000;
+          label = 'A 式 + B1/B2 式 + C 式 專案價';
+          items = groupData.A.items.concat(
+            hasB1 ? groupData.B1.items : groupData.B2.items,
+            groupData.C.items
+          );
+        } else if (key === 'A+B2+C') {
+          price = 6000;
+          label = 'A 式 + B2 式 + C 式 專案價';
+          items = groupData.A.items.concat(groupData.B2.items, groupData.C.items);
+        } else if (key === 'A+B2') {
+          price = 6000;
+          label = 'A 式 + B2 式';
+          items = groupData.A.items.concat(groupData.B2.items);
+        } else if (key === 'A+B1') {
+          price = 6000;
+          label = 'A 式 + B1 式';
+          items = groupData.A.items.concat(groupData.B1.items);
+        } else if (key === 'D') {
+          price = groupData.D.price;
+          label = 'D 式 專案價';
+          items = groupData.D.items;
+        } else {
+          price = groupData[key].price;
+          label = `${key} 式 專案價`;
+          items = groupData[key].items;
+        }
+
+        const li = document.createElement('li');
+        li.className = 'flex justify-between items-center gap-2 font-semibold text-green-700 text-lg';
+        let removeKey = key;
+        if (key === 'A+Bx+C') {
+          removeKey = hasB1 ? 'A+B1+C' : 'A+B2+C';
+        } else if (key === 'A+Bx+C+D') {
+          removeKey = hasB1 ? 'A+B1+C+D' : 'A+B2+C+D';
+        }
+        li.innerHTML = `${label}（${price} 元） <button onclick="removeGroupItems('${removeKey}')" class="text-red-500 text-sm">❌</button>`;
+        selectedItems.appendChild(li);
+        total += price;
+
+        items.forEach(name => {
+          const item = data.find(i => i.name === name);
+          if (item) specimenMap[item.specimen] = (specimenMap[item.specimen] || 0) + 1;
+        });
+      });
+
+      totalPrice.textContent = total;
+      specimenSummary.textContent = Object.entries(specimenMap)
+        .map(([key, value]) => `${key}類檢體：${value} 項`)
+        .join('，');
+
+      const imagingList = selected
+        .filter(item => item.specimen === "影像")
+        .map(item => item.name)
+        .filter(name => ["攝護腺超音波", "頸動脈超音波", "骨盆腔超音波", "甲狀腺超音波", "乳房超音波", "腹部超音波"].some(keyword => name.includes(keyword)));
+
+      const tubeMap = {
+        "同半胱胺酸 Homocysteine": "紫黃管 ＋1",
+        "酒精代謝基因檢測": "大紫管 ＋1",
+        "地中海型貧血(電泳)": "小紫管 ＋1",
+        "蠶豆症G6PD": "小紫管 ＋1",
+        "ApoE阿茲海默症風險基因檢測": "大紫管 ＋1",
+        "膽素脂酶(Cholinesterase)": "小紅管 ＋1",
+        "纖維蛋白原": "淺藍管 ＋1",
+        "血栓因子 D-Dimer": "淺藍管 ＋1",
+        "醣化血色素 (HbA1C)": "小紫管 ＋1",
+        "Anti-ENA抗體(CTD screen)": "大紅管 ＋1",
+        "過敏原檢測-36項": "大紅管 ＋1",
+        "過敏原檢測-50項": "大紅管 ＋2",
+        "過敏原檢測-100項": "大紅管 ＋3",
+        "梅毒反應(VDRL)": "大紅管 ＋1",
+        "C13尿素呼氣檢查幽門桿菌": "吹氣試驗 ＋1",
+        "ABO血型": "小紫管 ＋1"
+      };
+      const tubeColorClass = {
+        "紫黃管 ＋1": "tube-purpleyellow",
+        "大紫管 ＋1": "tube-purple",
+        "小紫管 ＋1": "tube-purple",
+        "小紅管 ＋1": "tube-red",
+        "淺藍管 ＋1": "tube-lightblue",
+        "大紅管 ＋1": "tube-red",
+        "大紅管 ＋2": "tube-red",
+        "大紅管 ＋3": "tube-red",
+        "吹氣試驗 ＋1": "tube-lightblue"
+      };
+      const tubes = [];
+      selected.forEach(item => {
+        for (const key in tubeMap) {
+          if (item.name.includes(key)) {
+            const tube = tubeMap[key];
+            const colorClass = tubeColorClass[tube] || '';
+            tubes.push(`（${key}）<span class="${colorClass}">${tube}</span>`);
+          }
+        }
+      });
+
+      const noteDiv = document.getElementById("package-note");
+      let extraInfo = [];
+      const imagingColorItems = imagingList.map(name => {
+        if (["骨盆腔超音波", "乳房超音波"].includes(name)) {
+          return `<span class="imaging-b2">${name}</span>`;
+        } else if (["攝護腺超音波"].includes(name)) {
+          return `<span class="imaging-b1">${name}</span>`;
+        }
+        return name;
+      });
+      if (imagingColorItems.length > 0) {
+        extraInfo.push(`<span class="imaging-label">影像類：</span>${imagingColorItems.join("、")}`);
+      }
+      if (tubes.length) {
+        extraInfo.push(`<span class="tube-label">採血管：</span><span class="tube-content">${tubes.join("，")}</span>`);
+      }
+      noteDiv.innerHTML = extraInfo.join('<br>');
+    }
+    window.onload = () => {
+      const gender = genderSelect.value;
+      document.getElementById('marriage-male').classList.add('hidden');
+      document.getElementById('marriage-female').classList.add('hidden');
+      if (gender === 'male') document.getElementById('marriage-male').classList.remove('hidden');
+      if (gender === 'female') document.getElementById('marriage-female').classList.remove('hidden');
+
+      const marriageTip = document.getElementById('marriage-tip');
+      if (gender === 'all') {
+        marriageTip.classList.remove('hidden');
+      } else {
+        marriageTip.classList.add('hidden');
+      }
+      if (gender === 'male') {
+        document.getElementById('box-b1').classList.remove('hidden');
+        document.getElementById('box-b2').classList.add('hidden');
+      } else if (gender === 'female') {
+        document.getElementById('box-b2').classList.remove('hidden');
+        document.getElementById('box-b1').classList.add('hidden');
+      } else {
+        document.getElementById('box-b1').classList.add('hidden');
+        document.getElementById('box-b2').classList.add('hidden');
+      }
+
+      // 控制超音波項目顯示
+      document.querySelector("li:has(button[onclick*=攝護腺超音波])").classList.add('hidden');
+      document.querySelector("li:has(button[onclick*=骨盆腔超音波])").classList.add('hidden');
+      document.querySelector("li:has(button[onclick*=乳房超音波])").classList.add('hidden');
+      if (gender === 'male') {
+        document.querySelector("li:has(button[onclick*=攝護腺超音波])").classList.remove('hidden');
+      } else if (gender === 'female') {
+        document.querySelector("li:has(button[onclick*=骨盆腔超音波])").classList.remove('hidden');
+        document.querySelector("li:has(button[onclick*=乳房超音波])").classList.remove('hidden');
+      }
+
+      document.getElementById('box-b').classList.remove('hidden');
+    };
+  </script>
+</body>
+
+</html>
